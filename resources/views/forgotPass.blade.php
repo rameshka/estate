@@ -27,7 +27,8 @@
     
     <input type="email" name="email" value=<?php echo "rameshkafox@gmail.com" ?> hidden="" />
     
-      <input type="hidden" name="_token" value = "{{ csrf_token() }}" /><br>
+      <input type="hidden" name="_token" value = "{{ csrf_token() }}" />
+      <br>
      <input type="submit" value="submit" id="submitPass" ><br>
 </form>
 

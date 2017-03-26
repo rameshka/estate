@@ -1,301 +1,845 @@
-<!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
-    <head>
-        <meta charset="utf-8">	
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name = "_token" content= "{{csrf_token()}}">
-        <title>Laravel</title>
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="author" content="M_Adnan" />
+<!-- Document Title -->
+<title>HOMES.lk</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+<!-- Favicon -->
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
-        <!-- Styles -->
-        <style>
-		label.error {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
-  padding:1px 20px 1px 20px;
+<!-- FontsOnline -->
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300,100' rel='stylesheet' type='text/css'>
+
+<!-- StyleSheets -->
+<link rel="stylesheet" href="css/welcome/ionicons.min.css">
+<link rel="stylesheet" href="css/welcome/materialize.min.css">
+<link rel="stylesheet" href="css/welcome/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="css/welcome/font-awesome.min.css">
+<link rel="stylesheet" href="css/welcome/main.css">
+<link rel="stylesheet" href="css/welcome/style.css">
+<link rel="stylesheet" href="css/welcome/responsive.css">
+<!--link rel="stylesheet" href="css/fmf_core.css"-->
+
+<!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+<link rel="stylesheet" href="css/welcome/settings.css" media="screen" />
+
+<!-- JavaScripts -->
+<script src="js/vendors/modernizr.js"></script>
+
+<style>
+
+  .agileits_search {
+    width: 50%;
+
+  margin-left:20%;
+
 }
-		
-		
-		</style>       
-				<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-                <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.js"></script>
-                    <script src='https://www.google.com/recaptcha/api.js'></script>
-                    
- <!------------ 360 view -------------------------->                   
-             
-     <link rel="stylesheet" href="{{URL::asset('panaroma/photo-sphere-viewer.css')}}">
-
-  <style>
-  
-    #photosphere {
-      width: 100%;
-      height: 400px;
-    }
-
-    .psv-button.custom-button {
-      font-size: 22px;
-      line-height: 20px;
-    }
-  </style>
-  <!------------ 360 view -------------------------->                
-    </head>
-    <body>
-       <div>
-    @if(Session::has('message'))
-   {{ Session::get('message') }}
-	@endif
-</div>
-	<!-- Errors -->  
-    <div>	
-		@if(count($errors) >0)
-				<div class ="row">
-					<div class="col-md-6">
-						<ul>
-							@foreach($errors->all() as $error)
-							
-                               {{$error}}
-							@endforeach
-                         
-						</ul>
-					</div>
-				</div>
-			@endif
-	</div>
-
-       
-     <form id="regForm" action='{{route('adminSignIn')}}' method="post">
-  	<label>Email:</label>
-    <input type="email" name="email" id="email" autocomplete="off"/><br>
-    <div id="status"></div>
-    <label>Password:</label>
-    <input type="password" name="password" id="password" required /><br>
-    <label>Password Reenter</label>
-    <input type="hidden" name="_token" value = "{{ csrf_token() }}" />
-    <input type="password" name="passwordreenter" required /><br>
-     <label> Username:</label>
-    <input type="text" name="username" required /><br>
-    <input type="checkbox" name="checkBox" id="check" value ="Agreed" required />
-    <label for="check">&nbsp;&nbsp;&nbsp;&nbsp;I agreed to the Homes.lk  Private Policy.</label>
-<!--div class="g-recaptcha"   name="recaptcha" id="recaptcha" data-callback="enableBtn" data-expired-callback="capcha_expired" data-sitekey="6LczxxQUAAAAAHUOKh2DExTVoN92jeqSB7qN8F80"></div--> 
-    <input type="submit" value="submit" id="submit"  ><br>
-</form>
-
-
-
-<a href='{{route ('pdf' ,['file=booksdata/PP.pdf'])}}'> TestPDF </a>
-
-
-<!-------------------------Log in window---------------------------------------->
-<H1> Login window </H1>
-<form action='{{route('login')}}' method="post">
- <label>Email:</label>
-    <input type="email" name="email" /><br>
-    <label>Password:</label>
-    <input type="password" name="password" id="password" required />
-      <input type="hidden" name="_token" value = "{{ csrf_token() }}" /><br>
-     <input type="submit" value="submit" id="submitlogin" ><br>
-</form>
-
- <div style="margin:20px 0 20px 0"> 
-  <a href="{{ URL::route('forgotPass') }}">Forgot Password</a>
-</div>
-
-
-<!------------------360 view -------------------------------------->
-
-<div id="photosphere"></div>
-
-<script src="{{URL::asset('panaroma/three.min.js')}}"></script>
-<script src="{{URL::asset('panaroma/D.min.js')}}"></script>
-<script src="{{URL::asset('panaroma/uevent.min.js')}}"></script>
-<script src="{{URL::asset('panaroma/doT.min.js')}}"></script>
-<script src="{{URL::asset('panaroma/CanvasRenderer.js')}}"></script>
-<script src="{{URL::asset('panaroma/Projector.js')}}"></script>
-<script src="{{URL::asset('panaroma/EffectComposer.js')}}"></script>
-<script src="{{URL::asset('panaroma/RenderPass.js')}}"></script>
-<script src="{{URL::asset('panaroma/ShaderPass.js')}}"></script>
-<script src="{{URL::asset('panaroma/MaskPass.js')}}"></script>
-<script src="{{URL::asset('panaroma/CopyShader.js')}}"></script>
-<script src="{{URL::asset('panaroma/DeviceOrientationControls.js')}}"></script>
-<script src="{{URL::asset('panaroma/photo-sphere-viewer.js')}}"></script>
-
-<script type="text/template" id="pin-content">
-
-<pre><code>
-#header h1 a {
-	display: block;
-	width: 300px;
-	height: 80px;
+.agileits_search form {
+    border: 30px solid rgba(0, 0, 0, 0.55);
 }
-</code></pre>
-</script>
+.agileits_search input[type="text"] {
+    outline: none;
+    border:none;
+    background: #fff;
+    color: #999;
+    padding: 1.1em 1em;
+    font-size: 1em;
+    float: left;
+}
+.agileits_search input[type="text"]{
+	width: 80%;
+	height:51px;
+}
 
-<svg id="patterns">
-  <defs>
-    <pattern id="dots" x="10" y="10" width="30" height="30" patternUnits="userSpaceOnUse">
-      <circle cx="10" cy="10" r="10" style="stroke: none; fill: rgba(255,0,0,0.4)" />
-    </pattern>
-    <pattern id="points" x="10" y="10" width="15" height="15" patternUnits="userSpaceOnUse">
-      <circle cx="10" cy="10" r="0.8" style="stroke: none; fill: red" />
-    </pattern>
-  </defs>
-</svg>
-
-<script>
-  var PSV = new PhotoSphereViewer({
-    panorama: 'houseviews/Bryce-Canyon-National-Park-Mark-Doliner.jpg',
-    container: 'photosphere',
-    //loading_img: 'photosphere-logo.gif',
+.agileits_search input[type="submit"] {
+    outline: none;
+    border: none;
+    background: #fd463e;
+    color: #fff;
+    padding: 1.1em 1em;
+    font-size: 1em;
+    width: 20%;
+	-webkit-transition:.5s all;
+	-moz-transition:.5s all;
+	-o-transition:.5s all;
+	-ms-transition:.5s all;
+	transition:.5s all;
+}
+.agileits_search input[type="submit"]:hover{
+	background:#f71d16;
+}
+.back{
+	 background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('images/slides/slides-1.jpg');
 	
-    navbar: [
-      'autorotate', 'zoom', 'download', 'markers',
-      'spacer-1',
-	     
-      {
-		  	
-        title: 'Change image',
-        className: 'custom-button',
-        content: '↻',
-        onClick: (function() {
-          var i = false;
+	}
+.banner-text {
+    padding-top:25%;
 
-          return function() {
-            i = !i;
-            PSV.clearMarkers();
-
-            PSV.setPanorama(i ? 'houseviews/Bryce-Canyon-By-Jess-Beauchemin.jpg' : 'houseviews/Bryce-Canyon-National-Park-Mark-Doliner.jpg', {
-              longitude: i ? 3.7153696451829257 : 3.8484510006474992,
-              latitude: i ? 0.57417649320975916 : -0.24434609527920628
-            }, true)
-              .then(function() {
-                PSV.setCaption(i ? 'Bryce Canyon National Park <b>&copy; Jess Beauchemin</b>' : 'Bryce Canyon National Park <b>&copy; Mark Doliner</b>');
-              });
-          }
-        }())
-      },
-      {
-        id: 'disabled',
-        title: 'This button is disabled',
-        content: '❌',
-        enabled: false
-      },
-      'caption',
-      'gyroscope',
-      'fullscreen'
-    ],
+}
+.banner-text h2 {
+    font-size: 2em;
+    color: #fff;
+    line-height: 1.3em;
+    letter-spacing: 1px;
+	margin-left:20%;
 	
-    caption: 'Bryce Canyon National Park <b>&copy; Mark Doliner</b>',
-    longitude_range: [-7*Math.PI/8, 7*Math.PI/8],
-    latitude_range: [-3*Math.PI/4, 3*Math.PI/4],
-    anim_speed: '-2rpm',
-    default_fov: 50,
-    fisheye: true,
-    move_speed: 1.1,
-    time_anim: false,
-    gyroscope: true,
-    webgl: true,
-    transition: {
-      duration: 1000,
-      loader: true,
-      blur: true
-    },
+}
 
-    
-    
-  });
+
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader">
+    <div class="position-center-center"> <img src="images/logo.png" alt="" >
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page Wrapper -->
+<div id="wrap">
+  <!-- Header -->
+  <header class="header coporate-header">
+    <div class="sticky">
+      <div class="container">
+        <div class="logo"> <a href="index.html"></a> </div>
+        
+        <!-- Nav -->
+        <nav>
+          <ul id="ownmenu" class="ownmenu">
+            <li class="active"><a href="index.html">HOME</a>
+            </li>
+            <li><a href="index.html">Advice</a></li>
+            <li><a href="index.html">Auction</a></li>
+            <li><a href="index.html">Financial Plans</a></li>
+            <li><a href="{{ URL::route('loginSeller') }}">Sell Property</a> </li>
+            <li><a href="{{ URL::route('loginView') }}">Login</a></li>
+          </ul>
+        </nav>
+        
+        </div>
+    </div>
+  </header>
+  <!-- End Header --> 
   
-  
-  $(document).ready(function(){
-    $('#360').click(function(){
-  			PSV.clearMarkers();
-			var i ;
-            PSV.setPanorama(i ? 'houseviews/Bryce-Canyon-By-Jess-Beauchemin.jpg' : 'houseviews/Bryce-Canyon-National-Park-Mark-Doliner.jpg', {
-              longitude: i ? 3.7153696451829257 : 3.8484510006474992,
-              latitude: i ? 0.57417649320975916 : -0.24434609527920628
-            }, true)
-         
-    });
-  });
-</script>
+  <!--======= HOME MAIN SLIDER =========-->
+  <section class="home-slider">
+    <div class="tp-banner-container back">
 
-
-
-<div> <button id="360"> Enable 360 view </button> </div>
-
-
-
-
-<script>
-//////////////////////////  ajax part finding email///////////////////////////////////////
-$(document).ready(function(){
-	$("#email").keyup(function(){
-		var email = $("#email").val();
-		var token = $('meta[name="_token"]').attr('content');
-		var urlData='{{route("emailCheck")}}';
-		if (email.length==0)
-		{
-			$("#status").html("");
-		}
-		if(email.length >= 2)
-		{
-			$("#status").html('<img src="welcomeassets/loader.gif" /> Checking availability...');
-			$.ajax({
-    			type: "POST",
-    			url: urlData ,
-    			data: { _token:token , 'datafile':email},
-    			cache: false,
-    			success: function(data)
-    				{	var datavales = data.split("|");
-  						 $("#status").html(datavales[0]);	
-						 if (datavales[1] == "false")
-						 {
-							 document.getElementById("submit").disabled = true;
-						}
-						else if (datavales[1] == "true")
-						{
-							document.getElementById("submit").disabled = false;
-						}
-    				}
-    			});
-		}
-		
-	});
-});
-</script>
-<script>
-
-jQuery('#regForm').validate({
+      <div class="tp-banner-fix  ">
+      
+             <div class="banner-text">  
+                <h2>Find your Dream Home</h2> 
+              </div>
+				<div class="agileits_search back">
+					<form action="#" method="post">
+						<input name="Search" type="text" placeholder="Enter City" required="">
 	
+						<input type="submit" value="Search">
+					</form>
+				</div> 
 			
-            rules : {
-				
-                password : {
-                    minlength : 5
-                },
-                passwordreenter : {
-                    minlength : 5,
-                    equalTo : "#password"
-                },
-		
-            }
-});
-
-$('#submit').click(function(){
-    console.log($('#regForm').valid());
-	
-});
-
- function enableBtn(){
-     document.getElementById("submit").disabled = false;
-   }
+      </div>
+      </div>
+  </section>
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!-- Services -->
+    <section class="welcome padding-top-100 padding-bottom-100 ">
+      <div class="container"> 
+        <!-- HEADING BLOCK -->
+        <div class="heading-block text-center margin-bottom-80">
+          <h3>Welcome To Fugiat</h3>
+          <hr>
+          <span class=" margin-top-20">The weather started getting rough - the tiny ship was tossed. If not for the courage of the fearless crew the Minnow would be lost. the Minnow always wanted to have a neighbor just like you. I've always wanted to live in a neighborhood with you. </span> </div>
+        
+        <!-- Icon Row -->
+        <div class="text-center margin-bottom-50"> <img class="img-responsive" src="images/intro-tabs-1.png" alt="" > </div>
+        <div class="services-welcome text-center">
+          <ul class="row">
+            
+            <!-- Services -->
+            <li class="col-md-4">
+              <div class="icon"> <i class="ion-ios-speedometer-outline"></i> </div>
+              <h5 class="margin-top-40 margin-bottom-20" >who we are</h5>
+              <p>Takin' a break from all your worries sure would help a lot. Sunny Days sweepin' the clouds away. On 
+                my way to where the air is sweet. </p>
+            </li>
+            
+            <!-- Services -->
+            <li class="col-md-4">
+              <div class="icon"> <i class="ion-ios-color-wand-outline"></i> </div>
+              <h5 class="margin-top-40 margin-bottom-20">what we do</h5>
+              <p>Takin' a break from all your worries sure would help a lot. Sunny Days sweepin' the clouds away. On 
+                my way to where the air is sweet. </p>
+            </li>
+            
+            <!-- Services -->
+            <li class="col-md-4">
+              <div class="icon"> <i class="ion-ios-infinite-outline"></i> </div>
+              <h5 class="margin-top-40 margin-bottom-20">our great team</h5>
+              <p>Takin' a break from all your worries sure would help a lot. Sunny Days sweepin' the clouds away. On 
+                my way to where the air is sweet. </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROMO -->
+    <section class="video-sec text-center padding-bottom-100 padding-top-100" style="background:url(images/bg/video-bg.jpg) no-repeat;">
+      <div class="container">
+        <h3 class="text-white text-uppercase letter-space-2">Video section</h3>
+        <a href="#." class="waves-effect waves-light video-btn"><i class="fa fa-play"></i></a>
+        <h6 class="text-white font-bold text-uppercase letter-space-4 margin-top-40">How we work for our success</h6>
+      </div>
+    </section>
+    
+    <!-- SERVICES -->
+    <section class="services padding-top-100 padding-bottom-80">
+      <div class="container"> 
+        
+        <!-- HEADING BLOCK -->
+        <div class="heading-block text-center margin-bottom-80">
+          <h3>Services What We Provide</h3>
+          <hr>
+          <span class=" margin-top-20">The weather started getting rough - the tiny ship was tossed. If not for the courage of the fearless crew the Minnow would be lost. the Minnow always wanted to have a neighbor just like you. I've always wanted to live in a neighborhood with you. </span> </div>
+        <div class="services-welcome text-center">
+          <ul class="row">
+            
+            <!-- Services -->
+            <li class="col-md-4">
+              <article class="z-depth-1">
+                <div class="icon"> <i class="icon-pencil"></i> </div>
+                <h5 class="margin-top-30 margin-bottom-10" >Web design</h5>
+                <p>Takin' a break from all your worries sure would help a lot. Sunny Days sweepin' the clouds away. On 
+                  my way to where the air is sweet. </p>
+                <a href="#." class="waves-effect waves-ripple btn">read more</a> </article>
+            </li>
+            
+            <!-- Services -->
+            <li class="col-md-4">
+              <article class="z-depth-1">
+                <div class="icon"> <i class="ion-code"></i> </div>
+                <h5 class="margin-top-30 margin-bottom-10">Web development</h5>
+                <p>Takin' a break from all your worries sure would help a lot. Sunny Days sweepin' the clouds away. On 
+                  my way to where the air is sweet. </p>
+                <a href="#." class="waves-effect waves-ripple btn">read more</a> </article>
+            </li>
+            
+            <!-- Services -->
+            <li class="col-md-4">
+              <article class="z-depth-1">
+                <div class="icon"> <i class="icon-graph"></i> </div>
+                <h5 class="margin-top-30 margin-bottom-10">Web analytics</h5>
+                <p>Takin' a break from all your worries sure would help a lot. Sunny Days sweepin' the clouds away. On 
+                  my way to where the air is sweet. </p>
+                <a href="#." class="waves-effect waves-ripple btn">read more</a> </article>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- TEAM MEMBER -->
+    <section class="explore-tabs purple-bg padding-top-100">
+      <div class="container"> 
+        
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills padding-bottom-50" role="tablist">
+          <li role="presentation" class="active"><a href="#branch" role="tab" data-toggle="tab"><i class="icon-puzzle"></i> Elegant Design
+            <hr>
+            </a></li>
+          <li role="presentation"><a href="#project" role="tab" data-toggle="tab"><i class="icon-layers"></i> different layout
+            <hr>
+            </a></li>
+          <li role="presentation"><a href="#news" role="tab" data-toggle="tab"><i class="icon-diamond"></i> unique elements
+            <hr>
+            </a></li>
+          <li role="presentation"><a href="#contact" role="tab" data-toggle="tab"><i class="icon-emoticon-smile"></i> user friendly
+            <hr>
+            </a></li>
+        </ul>
+      </div>
+      <div class="light-gray-bg padding-top-100">
+        <div class="container"> 
+          <!-- Tab panes -->
+          <div class="tab-content"> 
+            
+            <!-- Branch -->
+            <div role="tabpanel" class="tab-pane fade in active" id="branch">
+              <div class="row">
+                <div class="col-md-5">
+                  <h4 class="text-uppercase margin-bottom-30 letter-space-1 margin-top-20">Elegant Design</h4>
+                  <p>That's just a little bit more than the law will allow. In 1972 a crack commando unit was sent to prison by a military court for a crime they didn't commit.</p>
+                  <p>These Happy Days are yours and mine Happy Days. Just sit right back and you'll hear a tale a tale of a fateful trip that started from this tropic port aboard this tiny ship. Goodbye gray sky hello blue. There's nothing can hold me when I hold you. </p>
+                  <a href="#." class="waves-effect waves-light btn btn-white margin-top-30 margin-right-20">contact us</a> <a href="#." class="waves-effect waves-ripple btn margin-top-30 margin-left-20">purchase now</a> </div>
+                <div class="col-md-7"> <img src="images/ipad-large.png" alt="" > </div>
+              </div>
+            </div>
+            
+            <!-- project -->
+            <div role="tabpanel" class="tab-pane fade" id="project">
+              <div class="row">
+                <div class="col-md-5">
+                  <h4 class="text-uppercase margin-bottom-30 letter-space-1 margin-top-20">Different layout</h4>
+                  <p>That's just a little bit more than the law will allow. In 1972 a crack commando unit was sent to prison by a military court for a crime they didn't commit.</p>
+                  <p>These Happy Days are yours and mine Happy Days. Just sit right back and you'll hear a tale a tale of a fateful trip that started from this tropic port aboard this tiny ship. Goodbye gray sky hello blue. There's nothing can hold me when I hold you. </p>
+                  <a href="#." class="waves-effect waves-light btn btn-white margin-top-30 margin-right-20">contact us</a> <a href="#." class="waves-effect waves-ripple btn margin-top-30 margin-left-20">purchase now</a> </div>
+                <div class="col-md-7"> <img src="images/ipad-large.png" alt="" > </div>
+              </div>
+            </div>
+            
+            <!-- news -->
+            <div role="tabpanel" class="tab-pane fade" id="news">
+              <div class="row">
+                <div class="col-md-5">
+                  <h4 class="text-uppercase margin-bottom-30 letter-space-1 margin-top-20">unique elements</h4>
+                  <p>That's just a little bit more than the law will allow. In 1972 a crack commando unit was sent to prison by a military court for a crime they didn't commit.</p>
+                  <p>These Happy Days are yours and mine Happy Days. Just sit right back and you'll hear a tale a tale of a fateful trip that started from this tropic port aboard this tiny ship. Goodbye gray sky hello blue. There's nothing can hold me when I hold you. </p>
+                  <a href="#." class="waves-effect waves-light btn btn-white margin-top-30 margin-right-20">contact us</a> <a href="#." class="waves-effect waves-ripple btn margin-top-30 margin-left-20">purchase now</a> </div>
+                <div class="col-md-7"> <img src="images/ipad-large.png" alt="" > </div>
+              </div>
+            </div>
+            
+            <!-- contact -->
+            <div role="tabpanel" class="tab-pane fade" id="contact">
+              <div class="row">
+                <div class="col-md-5">
+                  <h4 class="text-uppercase margin-bottom-30 letter-space-1 margin-top-20">user friendly</h4>
+                  <p>That's just a little bit more than the law will allow. In 1972 a crack commando unit was sent to prison by a military court for a crime they didn't commit.</p>
+                  <p>These Happy Days are yours and mine Happy Days. Just sit right back and you'll hear a tale a tale of a fateful trip that started from this tropic port aboard this tiny ship. Goodbye gray sky hello blue. There's nothing can hold me when I hold you. </p>
+                  <a href="#." class="waves-effect waves-light btn btn-white margin-top-30 margin-right-20">contact us</a> <a href="#." class="waves-effect waves-ripple btn margin-top-30 margin-left-20">purchase now</a> </div>
+                <div class="col-md-7"> <img src="images/ipad-large.png" alt="" > </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROMO -->
+    <section class="promo text-center padding-bottom-100 padding-top-100" style="background:url(images/bg/promo-bg.jpg) no-repeat;">
+      <div class="container">
+        <h6>We have used latest Technology</h6>
+        <h3>True Material Design For Your Business</h3>
+        <a href="#." class="waves-effect waves-light btn btn-white margin-right-20">purchase now</a> <a href="#." class="waves-effect waves-ripple btn margin-left-20">purchase now</a> </div>
+    </section>
+    
+    <!-- PORTFOLIO -->
+    <section class="portfolio port-wrap padding-bottom-100 padding-top-100">
+      <div class="container"> 
+        <!-- HEADING BLOCK -->
+        <div class="heading-block text-center margin-bottom-80">
+          <h3 class=" no-margin">Our Latest Works</h3>
+          <hr>
+          <span class=" margin-top-20">The weather started getting rough - the tiny ship was tossed. If not for the courage of the fearless crew the Minnow would be lost. the Minnow always wanted to have a neighbor just like you. I've always wanted to live in a neighborhood with you. </span> </div>
+        
+        <!-- PORTFOLIO ITEMS -->
+        <div class="items row col-3 with-space"> 
+          
+          <!-- ITEM -->
+          <article class="portfolio-item pf-web-design">
+            <div class="portfolio-image"> <img class="img-responsive" alt="Open Imagination" src="images/portfolio/img-2-1.jpg"> <a href="images/portfolio/img-2-1.jpg" data-rel="prettyPhoto" class="prettyPhoto lightzoom zoom"><i class="ion-ios-search"></i></a>
+              <div class="portfolio-overlay style-2">
+                <div class="detail-info">
+                  <h3><a href="portfolio-single.html">Boulangerie product design</a></h3>
+                  <span><a href="portfolio-single.html">Branding & Wed Design</a></span> </div>
+              </div>
+            </div>
+          </article>
+          
+          <!-- ITEM -->
+          <article class="portfolio-item pf-photography pf-branding-design">
+            <div class="portfolio-image"> <img class="img-responsive" alt="Open Imagination" src="images/portfolio/img-2-2.jpg"> <a href="images/portfolio/img-2-2.jpg" data-rel="prettyPhoto" class="prettyPhoto lightzoom zoom"><i class="ion-ios-search"></i></a>
+              <div class="portfolio-overlay style-2">
+                <div class="detail-info">
+                  <h3><a href="portfolio-single.html">Boulangerie product design</a></h3>
+                  <span><a href="portfolio-single.html">Branding & Wed Design</a></span> </div>
+              </div>
+            </div>
+          </article>
+          
+          <!-- ITEM -->
+          <article class="portfolio-item pf-web-design pf-branding-design">
+            <div class="portfolio-image"> <img class="img-responsive" alt="Open Imagination" src="images/portfolio/img-2-3.jpg"> <a href="images/portfolio/img-2-3.jpg" data-rel="prettyPhoto" class="prettyPhoto lightzoom zoom"><i class="ion-ios-search"></i></a>
+              <div class="portfolio-overlay style-2">
+                <div class="detail-info">
+                  <h3><a href="portfolio-single.html">Boulangerie product design</a></h3>
+                  <span><a href="portfolio-single.html">Branding & Wed Design</a></span> </div>
+              </div>
+            </div>
+          </article>
+          
+          <!-- ITEM -->
+          <article class="portfolio-item pf-web-design pf-digital-art ">
+            <div class="portfolio-image"> <img class="img-responsive" alt="Open Imagination" src="images/portfolio/img-2-4.jpg"> <a href="images/portfolio/img-2-4.jpg" data-rel="prettyPhoto" class="prettyPhoto lightzoom zoom"><i class="ion-ios-search"></i></a>
+              <div class="portfolio-overlay style-2">
+                <div class="detail-info">
+                  <h3><a href="portfolio-single.html">Boulangerie product design</a></h3>
+                  <span><a href="portfolio-single.html">Branding & Wed Design</a></span> </div>
+              </div>
+            </div>
+          </article>
+          
+          <!-- ITEM -->
+          <article class="portfolio-item pf-web-design pf-digital-art ">
+            <div class="portfolio-image"> <img class="img-responsive" alt="Open Imagination" src="images/portfolio/img-2-5.jpg"> <a href="images/portfolio/img-2-5.jpg" data-rel="prettyPhoto" class="prettyPhoto lightzoom zoom"><i class="ion-ios-search"></i></a>
+              <div class="portfolio-overlay style-2">
+                <div class="detail-info">
+                  <h3><a href="portfolio-single.html">Boulangerie product design</a></h3>
+                  <span><a href="portfolio-single.html">Branding & Wed Design</a></span> </div>
+              </div>
+            </div>
+          </article>
+          
+          <!-- ITEM -->
+          <article class="portfolio-item pf-web-design pf-digital-art ">
+            <div class="portfolio-image"> <img class="img-responsive" alt="Open Imagination" src="images/portfolio/img-2-6.jpg"> <a href="images/portfolio/img-2-6.jpg" data-rel="prettyPhoto" class="prettyPhoto lightzoom zoom"><i class="ion-ios-search"></i></a>
+              <div class="portfolio-overlay style-2">
+                <div class="detail-info">
+                  <h3><a href="portfolio-single.html">Boulangerie product design</a></h3>
+                  <span><a href="portfolio-single.html">Branding & Wed Design</a></span> </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    
+    <!-- PROMO -->
+    <section class="promo pink-bg padding-bottom-60 padding-top-60">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h3 class="text-white text-uppercase no-margin">Do you want to   discuss wth us?</h3>
+          </div>
+          <div class="col-md-5 text-right"> <a href="#." class="waves-effect waves-light btn  btn-white margin-right-20">contact us</a> <a href="#." class="waves-effect btn btn-blue margin-left-20">purchase now</a> </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- TESTIMONIALS -->
+    <section class="padding-bottom-100 padding-top-100">
+      <div class="container"> 
+        <!-- HEADING BLOCK -->
+        <div class="heading-block text-center margin-bottom-80">
+          <h3>Our Work Process</h3>
+          <hr>
+          <span class=" margin-top-20">The weather started getting rough - the tiny ship was tossed. If not for the courage of the fearless crew the Minnow would be lost. the Minnow always wanted to have a neighbor just like you. I've always wanted to live in a neighborhood with you. </span> </div>
+        <div class="work-process">
+          <ul class="icon-follow">
+            <li>
+              <div class="icon"> <i class="icon-bulb"></i> </div>
+              <h6 class="text-uppercase">Ideas</h6>
+            </li>
+            <li>
+              <div class="icon"> <i class="icon-puzzle"></i> </div>
+              <h6 class="text-uppercase">plans</h6>
+            </li>
+            <li>
+              <div class="icon"> <i class="icon-pencil"></i> </div>
+              <h6 class="text-uppercase">Design</h6>
+            </li>
+            <li>
+              <div class="icon"> <i class="icon-layers"></i> </div>
+              <h6 class="text-uppercase">development</h6>
+            </li>
+            <li>
+              <div class="icon"> <i class="icon-rocket"></i> </div>
+              <h6 class="text-uppercase">launch</h6>
+            </li>
+          </ul>
+          <p class="into-type"> And they're always glad you came. And you know where you were then. Girls were girls and men were men. Mister we could use a man like Herbert Hoover again. They call him Flipper Flipper faster than lightning.</p>
+          <div class="text-center margin-top-30"> <img class="img-responsive" src="images/iphone-landscape.png" alt=""> </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- TESTIMONIALS -->
+    <section class="testimonial style-2 light-gray-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="pink-bg padding-left-40 padding-right-40 padding-top-80 padding-bottom-80">
+              <h6 class="text-uppercase text-white letter-space-2 margin-bottom-40 font-16px font-normal">We love our clients</h6>
+              <p class="text-white line-height-28">The Brady Bunch the Brady Bunch that's the way we all became the Brady Bunch. Come and listen to a story about a man named Jed mountaineer barely kept his family fed. Just sit right back and you'll.</p>
+              <a href="#." class="waves-effect waves-light btn  btn-white margin-right-20 margin-top-50"> get a quote</a> </div>
+          </div>
+          
+          <!-- Slider -->
+          <div class="col-md-8">
+            <div class="single-slides"> 
+              
+              <!-- Slider item -->
+              <div class="item">
+                <div class="avatar"> <img src="images/avatar.jpg" alt="" > </div>
+                <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
+                <p>Friendly neighbors there that's where we meet. Can you tell me how to get how to get to Sesame Street! Here's the story of a lovely lady who was bringing up three very lovely girls. Said Californ'y is the place you ought to be 
+                  So they loaded up the truck and moved to Beverly. Hills that is stars.</p>
+                <h6>Micheal Anderson</h6>
+              </div>
+              
+              <!-- Slider item -->
+              <div class="item">
+                <div class="avatar"> <img src="images/avatar.jpg" alt="" > </div>
+                <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
+                <p>Friendly neighbors there that's where we meet. Can you tell me how to get how to get to Sesame Street! Here's the story of a lovely lady who was bringing up three very lovely girls. Said Californ'y is the place you ought to be 
+                  So they loaded up the truck and moved to Beverly. Hills that is stars.</p>
+                <h6>Micheal Anderson</h6>
+              </div>
+              
+              <!-- Slider item -->
+              <div class="item">
+                <div class="avatar"> <img src="images/avatar.jpg" alt="" > </div>
+                <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
+                <p>Friendly neighbors there that's where we meet. Can you tell me how to get how to get to Sesame Street! Here's the story of a lovely lady who was bringing up three very lovely girls. Said Californ'y is the place you ought to be 
+                  So they loaded up the truck and moved to Beverly. Hills that is stars.</p>
+                <h6>Micheal Anderson</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="padding-top-100 padding-bottom-100">
+      <div class="container"> 
+        <!-- HEADING BLOCK -->
+        <div class="heading-block text-center margin-bottom-80">
+          <h3>Our Expert Team Members</h3>
+          <hr>
+          <span class=" margin-top-20">The weather started getting rough - the tiny ship was tossed. If not for the courage of the fearless crew the Minnow would be lost. the Minnow always wanted to have a neighbor just like you. I've always wanted to live in a neighborhood with you. </span> </div>
+      </div>
+      
+      <!-- Team -->
+      <div class="expert-team">
+        <div class="container">
+          <ul class="row">
+            <!-- TEAM MEMBER -->
+            <li class="col-md-3">
+              <article class="z-depth-1 padding-30">
+                <div class="img-circle"> <img src="images/team-img-1.jpg" alt="">
+                  <h5>James Hopper</h5>
+                  <span>Lead Developer</span>
+                  <p>We finally got a piece of the pie. Makin' your way in the world today week long.</p>
+                  <ul class="social-icons">
+                    <li><a href="#."><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#."><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#."><i class="fa fa-google"></i></a></li>
+                  </ul>
+                </div>
+              </article>
+            </li>
+            
+            <!-- TEAM MEMBER -->
+            <li class="col-md-3">
+              <article class="z-depth-1 padding-30">
+                <div class="img-circle"> <img src="images/team-img-1.jpg" alt="">
+                  <h5>martin guptil</h5>
+                  <span>web Developer</span>
+                  <p>We finally got a piece of the pie. Makin' your way in the world today week long.</p>
+                  <ul class="social-icons">
+                    <li><a href="#."><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#."><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#."><i class="fa fa-google"></i></a></li>
+                  </ul>
+                </div>
+              </article>
+            </li>
+            
+            <!-- TEAM MEMBER -->
+            <li class="col-md-3">
+              <article class="z-depth-1 padding-30">
+                <div class="img-circle"> <img src="images/team-img-1.jpg" alt="">
+                  <h5>andrew hilson</h5>
+                  <span>Designer</span>
+                  <p>We finally got a piece of the pie. Makin' your way in the world today week long.</p>
+                  <ul class="social-icons">
+                    <li><a href="#."><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#."><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#."><i class="fa fa-google"></i></a></li>
+                  </ul>
+                </div>
+              </article>
+            </li>
+            
+            <!-- TEAM MEMBER -->
+            <li class="col-md-3">
+              <article class="z-depth-1 padding-30">
+                <div class="img-circle"> <img src="images/team-img-1.jpg" alt="">
+                  <h5>robert jakis</h5>
+                  <span>Marketing</span>
+                  <p>We finally got a piece of the pie. Makin' your way in the world today week long.</p>
+                  <ul class="social-icons">
+                    <li><a href="#."><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#."><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#."><i class="fa fa-google"></i></a></li>
+                  </ul>
+                </div>
+              </article>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="welcome padding-top-100 padding-bottom-100" style="background:url(images/bg/bg-1.jpg) no-repeat; background-size:cover;">
+      <div class="container"> 
+        
+        <!-- Icon Row -->
+        <div class="row">
+          <div class="col-md-7">
+            <ul class="row margin-top-50">
+              
+              <!-- Services -->
+              <li class="col-md-6 margin-bottom-50">
+                <div class="media">
+                  <div class="media-left">
+                    <div class="icon"> <i class="icon-rocket"></i> </div>
+                  </div>
+                  <div class="media-body">
+                    <h5>multipurpose</h5>
+                    <p>Takin' a break from all your wo ries sure would help a lot. </p>
+                  </div>
+                </div>
+              </li>
+              
+              <!-- Services -->
+              <li class="col-md-6 margin-bottom-50">
+                <div class="media">
+                  <div class="media-left">
+                    <div class="icon"> <i class="icon-screen-smartphone"></i> </div>
+                  </div>
+                  <div class="media-body">
+                    <h5>responsive</h5>
+                    <p>Takin' a break from all your wo ries sure would help a lot. </p>
+                  </div>
+                </div>
+              </li>
+              
+              <!-- Services -->
+              <li class="col-md-6">
+                <div class="media">
+                  <div class="media-left">
+                    <div class="icon"> <i class="icon-layers"></i> </div>
+                  </div>
+                  <div class="media-body">
+                    <h5>business layout</h5>
+                    <p>Takin' a break from all your wo ries sure would help a lot. </p>
+                  </div>
+                </div>
+              </li>
+              <li class="col-md-6">
+                <div class="media">
+                  <div class="media-left">
+                    <div class="icon"> <i class="icon-support"></i> </div>
+                  </div>
+                  <div class="media-body">
+                    <h5>full support</h5>
+                    <p>Takin' a break from all your wo ries sure would help a lot. </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <a href="#." class="waves-effect waves-light btn btn-white margin-top-50 margin-right-20">CONTACT US</a> <a href="#." class="waves-effect waves-ripple margin-top-50  btn margin-left-20">purchase now</a> </div>
+        </div>
+      </div>
+    </section>
+    <section class="padding-top-100 padding-bottom-100">
+      <div class="container"> 
+        
+        <!-- HEADING BLOCK -->
+        <div class="heading-block text-center margin-bottom-80">
+          <h3>Choose Your Pricing</h3>
+          <hr>
+          <span class=" margin-top-20">The weather started getting rough - the tiny ship was tossed. If not for the courage of the fearless crew the Minnow would be lost. the Minnow always wanted to have a neighbor just like you. I've always wanted to live in a neighborhood with you. </span> </div>
+        
+        <!-- PLAN -->
+        <div class="price-plan">
+          <ul class="row">
+            
+            <!-- PLAN 1 -->
+            <li class="col-md-3">
+              <article class="z-depth-1 padding-bottom-40">
+                <div class="head-price">
+                  <h4>basic</h4>
+                  <div class="price z-depth-1"> $50 </div>
+                </div>
+                <ul>
+                  <li>3 Web Design</li>
+                  <li> 5 Web Development</li>
+                  <li> Free Hosting</li>
+                  <li> SEO Optimization</li>
+                  <li> 24/7 Support</li>
+                  <li> WP Customization</li>
+                  <li> Free Membership</li>
+                </ul>
+                <a href="#." class="waves-effect waves-light btn btn-white">read more</a> </article>
+            </li>
+            
+            <!-- PLAN 2 -->
+            <li class="col-md-3">
+              <article class="z-depth-1 padding-bottom-40">
+                <div class="head-price">
+                  <h4>standard</h4>
+                  <div class="price z-depth-1"> $100 </div>
+                </div>
+                <ul>
+                  <li>3 Web Design</li>
+                  <li> 5 Web Development</li>
+                  <li> Free Hosting</li>
+                  <li> SEO Optimization</li>
+                  <li> 24/7 Support</li>
+                  <li> WP Customization</li>
+                  <li> Free Membership</li>
+                </ul>
+                <a href="#." class="waves-effect waves-light btn btn-white">read more</a> </article>
+            </li>
+            
+            <!-- PLAN 3 -->
+            <li class="col-md-3">
+              <article class="z-depth-1 padding-bottom-40">
+                <div class="head-price">
+                  <h4>business</h4>
+                  <div class="price z-depth-1"> $150 </div>
+                </div>
+                <ul>
+                  <li>3 Web Design</li>
+                  <li> 5 Web Development</li>
+                  <li> Free Hosting</li>
+                  <li> SEO Optimization</li>
+                  <li> 24/7 Support</li>
+                  <li> WP Customization</li>
+                  <li> Free Membership</li>
+                </ul>
+                <a href="#." class="waves-effect waves-light btn btn-white">read more</a> </article>
+            </li>
+            
+            <!-- PLAN 3 -->
+            <li class="col-md-3">
+              <article class="z-depth-1 padding-bottom-40">
+                <div class="head-price">
+                  <h4>unlimited</h4>
+                  <div class="price z-depth-1"> $250 </div>
+                </div>
+                <ul>
+                  <li>3 Web Design</li>
+                  <li> 5 Web Development</li>
+                  <li> Free Hosting</li>
+                  <li> SEO Optimization</li>
+                  <li> 24/7 Support</li>
+                  <li> WP Customization</li>
+                  <li> Free Membership</li>
+                </ul>
+                <a href="#." class="waves-effect waves-light btn btn-white">read more</a> </article>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- News Letter -->
+    <div class="container">
+      <section class="news-letter">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Subscribe to our newsletter</h5>
+            <p>You can unsubscribe anytime you want</p>
+          </div>
+          <div class="col-md-6">
+            <form>
+              <input type="email" class="z-depth-1" placeholder="Email address" required>
+              <button type="submit" class="btn waves-effect waves-light">subscribe</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- End Content --> 
+   
   
-</script>
 
-    </body>
+  
+  <!-- Footer -->
+  
+  <footer>
+    <div class="container">
+      <div class="row"> 
+        
+        <!-- About -->
+        <div class="col-md-3"> <img class="margin-bottom-20" src="images/logo-footer.png" alt="" >
+          <p>Said Californ'y is the place you ought to be So they loaded up the truck and moved to Beverly. Hills that is.</p>
+          
+          <!-- Social Icon -->
+          <ul class="social-icons">
+            <li><a href="#."><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#."><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#."><i class="fa fa-google"></i></a></li>
+            <li><a href="#."><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#."><i class="fa fa-dribbble"></i></a></li>
+          </ul>
+        </div>
+        
+        <!-- Our Services -->
+        <div class="col-md-3">
+          <h5>Our Services</h5>
+          <ul class="links">
+            <li><a href="#.">Wed Design</a></li>
+          </ul>
+        </div>
+        
+        <!-- useful links -->
+        <div class="col-md-3">
+          <h5>useful links</h5>
+          <ul class="links">
+            <li><a href="#.">About us</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Links -->
+      <ul class="bottom-links">
+        <li><a href="#.">Home </a></li>
+        <li><a href="#."> about us </a></li>
+        <li><a href="#."> services </a></li>
+        <li><a href="#."> Portfolio</a></li>
+        <li><a href="#."> blog </a></li>
+        <li><a href="#."> contact us</a></li>
+      </ul>
+      
+      <!-- Rights -->
+      <div class="rights">
+        <p>© 2015 All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer --> 
+</div>
+<!-- End Page Wrapper --> 
 
+<!-- JavaScripts --> 
+<script src="js/vendors/jquery/jquery.min.js"></script> 
+<script src="js/vendors/wow.min.js"></script> 
+<script src="js/vendors/bootstrap.min.js"></script> 
+<script src="js/vendors/materialize.min.js"></script> 
+<script src="js/vendors/own-menu.js"></script> 
+<script src="js/vendors/jquery.prettyPhoto.js"></script> 
+<script src="js/vendors/flexslider/jquery.flexslider-min.js"></script> 
+<script src="js/vendors/jquery.isotope.min.js"></script> 
+<script src="js/vendors/owl.carousel.min.js"></script> 
+
+<!-- SLIDER REVOLUTION 4.x SCRIPTS  --> 
+<script src="js/rsplugin/js/jquery.themepunch.tools.min.js"></script> 
+<script src="js/rsplugin/js/jquery.themepunch.revolution.min.js"></script> 
+<script src="js/main.js"></script>
+</body>
 </html>

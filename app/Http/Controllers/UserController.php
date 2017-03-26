@@ -14,10 +14,14 @@ use Hash;
 use View;
 Use DB;
 use Session;
+use App\Classes\Advisor;
+use App\Classes\Person;
+use App\Classes\Lender;
+
+
 
 
 class UserController extends Controller{
-	
 
 ////////////////////////// authenticating and welcome view////////////////////////////////////	
 public function welcome()
@@ -27,7 +31,7 @@ public function welcome()
 		//login  members will be redirected their dashboard according to their role
 		
 		if ($user->role=="admin"){
-		 return redirect()->route('admindashboard');
+		 return redirect()->route('admin/admindashboard');
 	
 		}
 }
@@ -40,7 +44,7 @@ public function adminSignIn(Request $request)
     		'email' => 'required',
     		'password' => 'required',
 			'passwordreenter' => 'required|same:password',
-			//'g-recaptcha-response' => 'required|captcha',
+			'g-recaptcha-response' => 'required|captcha',
 			]);
 			
 			$username =  $request['username'];
@@ -58,7 +62,7 @@ public function adminSignIn(Request $request)
 			if(Auth::attempt(['email'=>$request['email'],'password'=>$request['password']])){
 			
 			
-			return redirect()->route('admindashboard');
+			return redirect()->route('admin/admindashboard');
 		}
 		else
 		{
@@ -74,7 +78,7 @@ public function adminSignIn(Request $request)
 		$user = Auth::user();
 		$data ='https://localhost/estate/public/verifyMail?data='.$user->email;
 		//\Mail::to ($user)->send(new verification($user,$data));
-		return view('admindashboard')->with('data' ,$user);
+		return view('admin/admindashboard')->with('data' ,$user);
 	}
 	
 	
@@ -88,9 +92,45 @@ public function adminSignIn(Request $request)
 			
 		$email =  $request['email'];
 		$password =  $request['password'];
-		if(Auth::attempt(['email'=>$request['email'],'password'=>$request['password']])){
 		
-			return redirect()->route('admindashboard');
+		if(Auth::attempt(['email'=>$request['email'],'password'=>$request['password']])){
+			
+			$loginView = new functions();
+			$role = $loginView->getLoginView($email);
+			
+			echo $role;
+			
+			if($role == "admin")
+			
+			{
+			return redirect()->route('admin/admindashboard');
+			
+			}
+
+            else if($role == "seller")
+
+            {
+                return redirect()->route('sellerdashboard');
+
+            }
+
+			
+			/*
+			else if(){
+				return redirect()->back()->withErrors(['authenticationFailed', 'not admin']);
+				}
+		
+			else if(){
+				
+				
+				}
+				
+			else if(){
+				
+				}	
+				
+				*/
+		
 		}
 		else
 		{
@@ -269,11 +309,11 @@ public function adminSignIn(Request $request)
 		Input::file('datafile')->move($destinationPath, $temp.'.'.$extension);
 		*/
 		
-		$user = Auth::user();
-		$email=$user->email;
+		//$user = Auth::user();
+		//$email=$user->email;
 		
-		$func = new functions();
-		$temp= $func -> getID($email);
+	//	$func = new functions();
+		//$temp= $func -> getID($email);
 		
 		list($type, $data) = explode(';', $data);
 		list(, $data)      = explode(',', $data);
@@ -335,15 +375,13 @@ public function adminSignIn(Request $request)
 			
 			}	
 			
+	////////////////////////////////change forget Password/////////////////////////////////////////////////////////
 		public function forgotFinal(){
 			
 			echo "save to the database and kick";
 			
 			
-			}	
-			
-
-	
+			}
 }
 
 ?>

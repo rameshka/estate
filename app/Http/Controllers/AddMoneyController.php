@@ -7,7 +7,9 @@ use Validator;
 use URL;
 use Session;
 use Redirect;
-
+use App\Mail\paymentdetails;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 /** All Paypal Details class **/
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
@@ -31,8 +33,8 @@ class AddMoneyController extends Controller
      */
     public function __construct()
     {
-       // parent::__construct();
-        
+        // parent::__construct();
+
         /** setup PayPal api context **/
         $paypal_conf = \Config::get('paypal');
         $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
@@ -55,11 +57,17 @@ class AddMoneyController extends Controller
      */
     public function postPaymentWithpaypal(Request $request)
     {
+
+        \Session::put('paypalname',$request['paypalname']);
+
+        \Session::put('paypalamount',$request['paypalAmount']);
+
+        \Session::put('paypalDescription',$request['paypalDescription']);
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
         $item_1 = new Item();
         $item_1->setName('Item 1') /** item name **/
-            ->setCurrency('USD')
+        ->setCurrency('USD')
             ->setQuantity(1)
             ->setPrice($request->get('amount')); /** unit price **/
         $item_list = new ItemList();
@@ -73,25 +81,25 @@ class AddMoneyController extends Controller
             ->setDescription('Your transaction description');
         $redirect_urls = new RedirectUrls();
         $redirect_urls->setReturnUrl(URL::route('payment.status')) /** Specify return URL **/
-            ->setCancelUrl(URL::route('payment.status'));
+        ->setCancelUrl(URL::route('payment.status'));
         $payment = new Payment();
         $payment->setIntent('Sale')
             ->setPayer($payer)
             ->setRedirectUrls($redirect_urls)
             ->setTransactions(array($transaction));
-            /** dd($payment->create($this->_api_context));exit; **/
+        /** dd($payment->create($this->_api_context));exit; **/
         try {
             $payment->create($this->_api_context);
         } catch (\PayPal\Exception\PPConnectionException $ex) {
             if (\Config::get('app.debug')) {
                 \Session::put('error','Connection timeout');
-                return Redirect::route('addmoney.paywithpaypal');
+                return Redirect::route('paypalmessage');
                 /** echo "Exception: " . $ex->getMessage() . PHP_EOL; **/
                 /** $err_data = json_decode($ex->getData(), true); **/
                 /** exit; **/
             } else {
                 \Session::put('error','Some error occur, sorry for inconvenient');
-                return Redirect::route('addmoney.paywithpaypal');
+                return Redirect::route('paypalmessage');
                 /** die('Some error occur, sorry for inconvenient'); **/
             }
         }
@@ -108,7 +116,7 @@ class AddMoneyController extends Controller
             return Redirect::away($redirect_url);
         }
         \Session::put('error','Unknown error occurred');
-        return Redirect::route('addmoney.paywithpaypal');
+        return Redirect::route('paypalmessage');
     }
     public function getPaymentStatus()
     {
@@ -118,7 +126,7 @@ class AddMoneyController extends Controller
         Session::forget('paypal_payment_id');
         if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
             \Session::put('error','Payment failed');
-            return Redirect::route('addmoney.paywithpaypal');
+            return Redirect::route('paypalmessage');
         }
         $payment = Payment::get($payment_id, $this->_api_context);
         /** PaymentExecution object includes information necessary **/
@@ -130,14 +138,19 @@ class AddMoneyController extends Controller
         /**Execute the payment **/
         $result = $payment->execute($execution, $this->_api_context);
         /** dd($result);exit; /** DEBUG RESULT, remove it later **/
-        if ($result->getState() == 'approved') { 
-            
+        if ($result->getState() == 'approved') {
+
             /** it's all right **/
             /** Here Write your database logic like that insert record or value in database if you want **/
             \Session::put('success','Payment success');
-            return Redirect::route('addmoney.paywithpaypal');
+            $user = Auth::user();
+            \Mail::to($user)->send(new paymentdetails(Session::get('paypalname'),Session::get('paypalamount'),Session::get('paypalDescription')));
+            Session::forget('paypalname');
+            Session::forget('paypalamount');
+            Session::forget('paypalDescription');
+            return Redirect::route('paypalmessage');
         }
         \Session::put('error','Payment failed');
-        return Redirect::route('addmoney.paywithpaypal');
+        return Redirect::route('paypalmessage');
     }
-  }
+}
